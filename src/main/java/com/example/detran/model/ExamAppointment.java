@@ -1,3 +1,5 @@
+package com.example.detran.model; 
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 

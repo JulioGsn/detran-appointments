@@ -3,11 +3,9 @@ package com.example.detran.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import com.example.detran.model.enums.Category;
+import com.example.detran.model.enums.LicenseCategory;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,7 +41,7 @@ public class Exam {
     private LocalTime end_at;
 
     @Enumerated(EnumType.STRING)
-    private Category licenseCategory = Category.CATEGORYAB;
+    private LicenseCategory licenseCategory = LicenseCategory.CATEGORYAB;
 
     private Integer capacity;
 }

@@ -1,10 +1,10 @@
+package com.example.detran.model;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.hibernate.annotations.IdGeneratorType;
+import com.example.detran.model.enums.LicenseCategory;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,7 +32,7 @@ public class Candidate {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    private String licenseCategory;
+    private LicenseCategory licenseCategory;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
