@@ -44,4 +44,37 @@ public class Exam {
     private LicenseCategory licenseCategory = LicenseCategory.CATEGORYAB;
 
     private Integer capacity;
+
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getStart_at() {
+        return start_at;
+    }
+
+    public void setStart_at(LocalTime start_at) {
+        this.start_at = start_at;
+    }
+
+    public LocalTime getEnd_at() {
+        return end_at;
+    }
+
+    public void setEnd_at(LocalTime end_at) {
+        this.end_at = end_at;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
 }

@@ -29,4 +29,28 @@ public class ExamResult {
 
     @Column(length = 10)
     private ExamResultStatus result;
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
+    }
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
+
+    public ExamResultStatus getResult() {
+        return result;
+    }
+
+    public void setResult(ExamResultStatus result) {
+        this.result = result;
+    }
 }
