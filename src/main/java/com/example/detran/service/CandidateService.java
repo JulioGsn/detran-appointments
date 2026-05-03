@@ -39,7 +39,7 @@ public class CandidateService {
         candidateFound.setName(candidate.getName());
         candidateFound.setEmail(candidate.getEmail());
         
-        candidateRepository.save(candidate);
+        candidateRepository.save(candidateFound);
         return candidateFound;
     }
 

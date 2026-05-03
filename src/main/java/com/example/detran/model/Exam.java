@@ -45,7 +45,6 @@ public class Exam {
 
     private Integer capacity;
 
-
     public LocalDate getDate() {
         return date;
     }
