@@ -7,6 +7,8 @@ import com.example.detran.model.enums.AppointmentStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,8 +35,17 @@ public class ExamAppointment {
     @Column(nullable = false)
     private LocalTime time;
 
+    @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false )
     private AppointmentStatus status = AppointmentStatus.PENDING;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Exam getExam() {
         return exam;

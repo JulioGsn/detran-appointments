@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.detran.dto.exam.ExamRequest;
+import com.example.detran.dto.exam.ExamResponse;
+import com.example.detran.mapper.ExamMapper;
 import com.example.detran.model.Exam;
 import com.example.detran.repository.ExamRepository;
 
@@ -15,28 +18,37 @@ public class ExamService {
         this.examRepository = examRepository;
     }
 
-    public Exam create(Exam exam) {
-        return examRepository.save(exam);
+    public ExamResponse create(ExamRequest request) {
+        Exam exam = ExamMapper.toEntity(request);
+        Exam savedExam = examRepository.save(exam);
+        return ExamMapper.toResponse(savedExam);
     }
 
-    public Exam findById(Long id) {
-        return examRepository.findById(id)
+    public ExamResponse findById(Long id) {
+        Exam exam = examRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Exam not found!"));
+
+        return ExamMapper.toResponse(exam);
     }
 
-    public List<Exam> findAll() {
-        return examRepository.findAll();
+    public List<ExamResponse> findAll() {
+        return examRepository.findAll()
+            .stream()
+            .map(ExamMapper::toResponse)
+            .toList();
     }
 
-    public Exam update(Long id, Exam exam) {
+    public ExamResponse update(Long id, ExamRequest request) {
         Exam examFound = examRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Exam not found!"));
-        examFound.setCapacity(exam.getCapacity());
-        examFound.setDate(exam.getDate());
-        examFound.setStart_at(exam.getStart_at());
-        examFound.setEnd_at(exam.getEnd_at());
+        examFound.setCapacity(request.getCapacity());
+        examFound.setDate(request.getDate());
+        examFound.setStart_at(request.getStart_at());
+        examFound.setEnd_at(request.getEnd_at());
+        examFound.setLicenseCategory(request.getLicenseCategory());
 
-        return examRepository.save(examFound);
+        Exam savedExam = examRepository.save(examFound);
+        return ExamMapper.toResponse(savedExam);
     }
 
     public void delete(Long id) {

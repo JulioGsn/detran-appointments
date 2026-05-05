@@ -45,6 +45,14 @@ public class Exam {
 
     private Integer capacity;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public LocalDate getDate() {
         return date;
     }
@@ -75,5 +83,13 @@ public class Exam {
 
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    public LicenseCategory getLicenseCategory() {
+        return licenseCategory;
+    }
+
+    public void setLicenseCategory(LicenseCategory licenseCategory) {
+        this.licenseCategory = licenseCategory;
     }
 }

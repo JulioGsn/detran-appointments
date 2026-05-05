@@ -269,7 +269,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"exam\": {\n    \"id\": {{examId}}\n  },\n  \"date\": \"2026-05-10\",\n  \"time\": \"08:30:00\",\n  \"status\": \"PENDING\"\n}"
+              "raw": "{\n  \"examId\": {{examId}},\n  \"date\": \"2026-05-10\",\n  \"time\": \"08:30:00\",\n  \"status\": \"PENDING\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/exam-appointments",
@@ -327,7 +327,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"exam\": {\n    \"id\": {{examId}}\n  },\n  \"date\": \"2026-05-10\",\n  \"time\": \"09:00:00\",\n  \"status\": \"CONFIRMED\"\n}"
+              "raw": "{\n  \"examId\": {{examId}},\n  \"date\": \"2026-05-10\",\n  \"time\": \"09:00:00\",\n  \"status\": \"CONFIRMED\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/exam-appointments/{{examAppointmentId}}",
@@ -387,7 +387,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"candidate\": {\n    \"id\": {{candidateId}}\n  },\n  \"exam\": {\n    \"id\": {{examId}}\n  },\n  \"result\": \"PASSED\"\n}"
+              "raw": "{\n  \"candidateId\": {{candidateId}},\n  \"examId\": {{examId}},\n  \"result\": \"PASSED\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/exam-results",
@@ -445,7 +445,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"candidate\": {\n    \"id\": {{candidateId}}\n  },\n  \"exam\": {\n    \"id\": {{examId}}\n  },\n  \"result\": \"FAILED\"\n}"
+              "raw": "{\n  \"candidateId\": {{candidateId}},\n  \"examId\": {{examId}},\n  \"result\": \"FAILED\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/exam-results/{{examResultId}}",

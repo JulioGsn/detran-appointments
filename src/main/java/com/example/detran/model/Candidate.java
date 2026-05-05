@@ -31,12 +31,53 @@ public class Candidate {
     private String name;
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private LicenseCategory licenseCategory;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<ExamResult> getExamResults() {
+        return examResults;
+    }
+
+    public void setExamResults(List<ExamResult> examResults) {
+        this.examResults = examResults;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getEmail() {
@@ -47,12 +88,12 @@ public class Candidate {
         this.email = email;
     }
 
-    @Enumerated(EnumType.STRING)
-    private LicenseCategory licenseCategory;
+    public LicenseCategory getLicenseCategory() {
+        return licenseCategory;
+    }
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    public void setLicenseCategory(LicenseCategory licenseCategory) {
+        this.licenseCategory = licenseCategory;
+    }
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 }

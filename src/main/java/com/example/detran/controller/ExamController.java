@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.detran.model.Exam;
+import com.example.detran.dto.exam.ExamRequest;
+import com.example.detran.dto.exam.ExamResponse;
 import com.example.detran.service.ExamService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,22 +27,22 @@ public class ExamController {
     }
 
     @GetMapping
-    public List<Exam> findAll() {
+    public List<ExamResponse> findAll() {
         return examService.findAll();
     }
 
     @PostMapping
-    public Exam create(@RequestBody Exam exam) {
-        return examService.create(exam);
+    public ExamResponse create(@RequestBody ExamRequest request) {
+        return examService.create(request);
     }
 
     @PutMapping("/{id}")
-    public Exam update(@PathVariable Long id, @RequestBody Exam exam) {
-        return examService.update(id, exam);
+    public ExamResponse update(@PathVariable Long id, @RequestBody ExamRequest request) {
+        return examService.update(id, request);
     }
 
     @GetMapping("/{id}")
-    public Exam findById(@PathVariable Long id) {
+    public ExamResponse findById(@PathVariable Long id) {
         return examService.findById(id);
     }
 

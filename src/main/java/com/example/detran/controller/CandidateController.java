@@ -3,7 +3,8 @@ package com.example.detran.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.detran.model.Candidate;
+import com.example.detran.dto.candidate.CandidateRequest;
+import com.example.detran.dto.candidate.CandidateResponse;
 import com.example.detran.service.CandidateService;
 
 import java.util.List;
@@ -25,22 +26,22 @@ public class CandidateController {
     }
 
     @GetMapping()
-    public List<Candidate> findAll() {
+    public List<CandidateResponse> findAll() {
         return candidateService.findAll();
     }
 
     @PostMapping
-    public Candidate create(@RequestBody Candidate candidate) {
+    public CandidateResponse create(@RequestBody CandidateRequest candidate) {
         return candidateService.create(candidate);
     }
     
     @PutMapping("/{id}")
-    public Candidate update(@PathVariable Long id, @RequestBody Candidate candidate) {
-        return candidateService.update(id, candidate);
+    public CandidateResponse update(@PathVariable Long id, @RequestBody CandidateRequest request) {
+        return candidateService.update(id, request);
     }
 
     @GetMapping("/{id}")
-    public Candidate findById(@PathVariable Long id) {
+    public CandidateResponse findById(@PathVariable Long id) {
         return candidateService.findById(id);
     }
 

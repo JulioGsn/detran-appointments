@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.detran.model.ExamResult;
+import com.example.detran.dto.result.ExamResultRequest;
+import com.example.detran.dto.result.ExamResultResponse;
 import com.example.detran.service.ExamResultService;
 
 @RestController
@@ -24,22 +25,22 @@ public class ExamResultController {
     }
 
     @GetMapping
-    public List<ExamResult> findAll() {
+    public List<ExamResultResponse> findAll() {
         return examResultService.findAll();
     }
 
     @PostMapping
-    public ExamResult create(@RequestBody ExamResult examResult) {
-        return examResultService.create(examResult);
+    public ExamResultResponse create(@RequestBody ExamResultRequest request) {
+        return examResultService.create(request);
     }
 
     @PutMapping("/{id}")
-    public ExamResult update(@PathVariable Long id, @RequestBody ExamResult examResult) {
-        return examResultService.update(id, examResult);
+    public ExamResultResponse update(@PathVariable Long id, @RequestBody ExamResultRequest request) {
+        return examResultService.update(id, request);
     }
 
     @GetMapping("/{id}")
-    public ExamResult findById(@PathVariable Long id) {
+    public ExamResultResponse findById(@PathVariable Long id) {
         return examResultService.findById(id);
     }
 

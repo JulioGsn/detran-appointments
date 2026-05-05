@@ -4,39 +4,66 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.detran.dto.result.ExamResultRequest;
+import com.example.detran.dto.result.ExamResultResponse;
+import com.example.detran.mapper.ExamResultMapper;
+import com.example.detran.model.Candidate;
+import com.example.detran.model.Exam;
 import com.example.detran.model.ExamResult;
+import com.example.detran.repository.CandidateRepository;
+import com.example.detran.repository.ExamRepository;
 import com.example.detran.repository.ExamResultRepository;
 
 @Service
 public class ExamResultService {
     private final ExamResultRepository examResultRepository;
+    private final CandidateRepository candidateRepository;
+    private final ExamRepository examRepository;
 
-    public ExamResultService(ExamResultRepository examResultRepository) {
+    public ExamResultService(ExamResultRepository examResultRepository, CandidateRepository candidateRepository, ExamRepository examRepository) {
         this.examResultRepository = examResultRepository;
+        this.candidateRepository = candidateRepository;
+        this.examRepository = examRepository;
     }
 
-    public ExamResult create(ExamResult examResult) {
-        return examResultRepository.save(examResult);
+    public ExamResultResponse create(ExamResultRequest request) {
+        Candidate candidate = candidateRepository.findById(request.getCandidateId())
+            .orElseThrow(() -> new RuntimeException("Candidate not found!"));
+        Exam exam = examRepository.findById(request.getExamId())
+            .orElseThrow(() -> new RuntimeException("Exam not found!"));
+        ExamResult examResult = ExamResultMapper.toEntity(request, candidate, exam);
+        ExamResult savedExamResult = examResultRepository.save(examResult);
+        return ExamResultMapper.toResponse(savedExamResult);
     }
 
-    public ExamResult findById(Long id) {
-        return examResultRepository.findById(id)
+    public ExamResultResponse findById(Long id) {
+        ExamResult examResult = examResultRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Exam result not found!"));
+
+        return ExamResultMapper.toResponse(examResult);
     }
 
-    public List<ExamResult> findAll() {
-        return examResultRepository.findAll();
+    public List<ExamResultResponse> findAll() {
+        return examResultRepository.findAll()
+            .stream()
+            .map(ExamResultMapper::toResponse)
+            .toList();
     }
 
-    public ExamResult update(Long id, ExamResult examResult) {
+    public ExamResultResponse update(Long id, ExamResultRequest request) {
         ExamResult examResultFound = examResultRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Exam result not found!"));
+        Candidate candidate = candidateRepository.findById(request.getCandidateId())
+            .orElseThrow(() -> new RuntimeException("Candidate not found!"));
+        Exam exam = examRepository.findById(request.getExamId())
+            .orElseThrow(() -> new RuntimeException("Exam not found!"));
 
-        examResultFound.setCandidate(examResult.getCandidate());
-        examResultFound.setExam(examResult.getExam());
-        examResultFound.setResult(examResult.getResult());
+        examResultFound.setCandidate(candidate);
+        examResultFound.setExam(exam);
+        examResultFound.setResult(request.getResult());
 
-        return examResultRepository.save(examResultFound);
+        ExamResult savedExamResult = examResultRepository.save(examResultFound);
+        return ExamResultMapper.toResponse(savedExamResult);
     }
 
     public void delete(Long id) {
