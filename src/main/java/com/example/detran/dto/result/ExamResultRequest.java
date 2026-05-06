@@ -2,9 +2,16 @@ package com.example.detran.dto.result;
 
 import com.example.detran.model.enums.ExamResultStatus;
 
+import jakarta.validation.constraints.NotNull;
+
 public class ExamResultRequest {
+    @NotNull(message = "Candidate id is required")
     private Long candidateId;
+
+    @NotNull(message = "Exam id is required")
     private Long examId;
+
+    @NotNull(message = "Result is required")
     private ExamResultStatus result;
 
     public Long getCandidateId() {

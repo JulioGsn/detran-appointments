@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.detran.dto.appointment.ExamAppointmentRequest;
 import com.example.detran.dto.appointment.ExamAppointmentResponse;
+import com.example.detran.exception.ResourceNotFoundException;
 import com.example.detran.mapper.ExamAppointmentMapper;
 import com.example.detran.model.Exam;
 import com.example.detran.model.ExamAppointment;
@@ -24,7 +25,7 @@ public class ExamAppointmentService {
 
     public ExamAppointmentResponse create(ExamAppointmentRequest request) {
         Exam exam = examRepository.findById(request.getExamId())
-            .orElseThrow(() -> new RuntimeException("Exam not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Exam not found!"));
         ExamAppointment examAppointment = ExamAppointmentMapper.toEntity(request, exam);
         ExamAppointment savedExamAppointment = examAppointmentRepository.save(examAppointment);
         return ExamAppointmentMapper.toResponse(savedExamAppointment);
@@ -32,7 +33,7 @@ public class ExamAppointmentService {
 
     public ExamAppointmentResponse findById(Long id) {
         ExamAppointment examAppointment = examAppointmentRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Exam appointment not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Exam appointment not found!"));
 
         return ExamAppointmentMapper.toResponse(examAppointment);
     }
@@ -46,9 +47,9 @@ public class ExamAppointmentService {
 
     public ExamAppointmentResponse update(Long id, ExamAppointmentRequest request) {
         ExamAppointment examAppointmentFound = examAppointmentRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Exam appointment not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Exam appointment not found!"));
         Exam exam = examRepository.findById(request.getExamId())
-            .orElseThrow(() -> new RuntimeException("Exam not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Exam not found!"));
 
         examAppointmentFound.setExam(exam);
         examAppointmentFound.setDate(request.getDate());
@@ -61,7 +62,7 @@ public class ExamAppointmentService {
 
     public void delete(Long id) {
         if(!examAppointmentRepository.existsById(id)) {
-            throw new RuntimeException("Exam appointment not found!");
+            throw new ResourceNotFoundException("Exam appointment not found!");
         }
 
         examAppointmentRepository.deleteById(id);

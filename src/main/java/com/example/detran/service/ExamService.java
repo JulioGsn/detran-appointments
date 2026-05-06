@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.detran.dto.exam.ExamRequest;
 import com.example.detran.dto.exam.ExamResponse;
+import com.example.detran.exception.ResourceNotFoundException;
 import com.example.detran.mapper.ExamMapper;
 import com.example.detran.model.Exam;
 import com.example.detran.repository.ExamRepository;
@@ -26,7 +27,7 @@ public class ExamService {
 
     public ExamResponse findById(Long id) {
         Exam exam = examRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Exam not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Exam not found!"));
 
         return ExamMapper.toResponse(exam);
     }
@@ -40,7 +41,7 @@ public class ExamService {
 
     public ExamResponse update(Long id, ExamRequest request) {
         Exam examFound = examRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Exam not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Exam not found!"));
         examFound.setCapacity(request.getCapacity());
         examFound.setDate(request.getDate());
         examFound.setStart_at(request.getStart_at());
@@ -53,7 +54,7 @@ public class ExamService {
 
     public void delete(Long id) {
         if(!examRepository.existsById(id)) {
-            throw new RuntimeException("Exam not found!");
+            throw new ResourceNotFoundException("Exam not found!");
         }
 
         examRepository.deleteById(id);

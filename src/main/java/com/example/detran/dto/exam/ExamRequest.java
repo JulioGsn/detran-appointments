@@ -5,11 +5,24 @@ import java.time.LocalTime;
 
 import com.example.detran.model.enums.LicenseCategory;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 public class ExamRequest {
+    @NotNull(message = "Date is required")
     private LocalDate date;
+
+    @NotNull(message = "Start time is required")
     private LocalTime start_at;
+
+    @NotNull(message = "End time is required")
     private LocalTime end_at;
+
+    @NotNull(message = "License category is required")
     private LicenseCategory licenseCategory;
+
+    @NotNull(message = "Capacity is required")
+    @Min(value = 1, message = "Capacity must be at least 1")
     private Integer capacity;
 
     public LocalDate getDate() {

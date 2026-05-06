@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.detran.dto.candidate.CandidateRequest;
 import com.example.detran.dto.candidate.CandidateResponse;
+import com.example.detran.exception.ResourceNotFoundException;
 import com.example.detran.mapper.CandidateMapper;
 import com.example.detran.model.Candidate;
 import com.example.detran.repository.CandidateRepository;
@@ -35,14 +36,14 @@ public class CandidateService {
 
     public CandidateResponse findById(Long id) {
         Candidate candidate = candidateRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Candidate not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Candidate not found!"));
 
         return CandidateMapper.toResponse(candidate);
     }
 
     public CandidateResponse update(Long id, CandidateRequest request) {
         Candidate candidateFound = candidateRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Candidate not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Candidate not found!"));
 
         candidateFound.setName(request.getName());
         candidateFound.setEmail(request.getEmail());
@@ -54,7 +55,7 @@ public class CandidateService {
 
     public void delete(Long id) {
         if(!candidateRepository.existsById(id)) {
-            throw new RuntimeException("Candidate not found!");
+            throw new ResourceNotFoundException("Candidate not found!");
         }
         candidateRepository.deleteById(id);
     }

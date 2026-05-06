@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.detran.dto.result.ExamResultRequest;
 import com.example.detran.dto.result.ExamResultResponse;
+import com.example.detran.exception.ResourceNotFoundException;
 import com.example.detran.mapper.ExamResultMapper;
 import com.example.detran.model.Candidate;
 import com.example.detran.model.Exam;
@@ -28,9 +29,9 @@ public class ExamResultService {
 
     public ExamResultResponse create(ExamResultRequest request) {
         Candidate candidate = candidateRepository.findById(request.getCandidateId())
-            .orElseThrow(() -> new RuntimeException("Candidate not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Candidate not found!"));
         Exam exam = examRepository.findById(request.getExamId())
-            .orElseThrow(() -> new RuntimeException("Exam not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Exam not found!"));
         ExamResult examResult = ExamResultMapper.toEntity(request, candidate, exam);
         ExamResult savedExamResult = examResultRepository.save(examResult);
         return ExamResultMapper.toResponse(savedExamResult);
@@ -38,7 +39,7 @@ public class ExamResultService {
 
     public ExamResultResponse findById(Long id) {
         ExamResult examResult = examResultRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Exam result not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Exam result not found!"));
 
         return ExamResultMapper.toResponse(examResult);
     }
@@ -52,11 +53,11 @@ public class ExamResultService {
 
     public ExamResultResponse update(Long id, ExamResultRequest request) {
         ExamResult examResultFound = examResultRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Exam result not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Exam result not found!"));
         Candidate candidate = candidateRepository.findById(request.getCandidateId())
-            .orElseThrow(() -> new RuntimeException("Candidate not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Candidate not found!"));
         Exam exam = examRepository.findById(request.getExamId())
-            .orElseThrow(() -> new RuntimeException("Exam not found!"));
+            .orElseThrow(() -> new ResourceNotFoundException("Exam not found!"));
 
         examResultFound.setCandidate(candidate);
         examResultFound.setExam(exam);
@@ -68,7 +69,7 @@ public class ExamResultService {
 
     public void delete(Long id) {
         if(!examResultRepository.existsById(id)) {
-            throw new RuntimeException("Exam result not found!");
+            throw new ResourceNotFoundException("Exam result not found!");
         }
 
         examResultRepository.deleteById(id);

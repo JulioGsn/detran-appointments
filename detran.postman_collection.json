@@ -2,20 +2,61 @@
   "info": {
     "_postman_id": "6fb68bc3-b56f-43c0-a4d2-1cc137c48a4a",
     "name": "Detran API",
-    "description": "Rotas REST simples para testar a API do projeto Detran.",
+    "description": "Collection para testar DTOs, status HTTP e regras de Spring Security da API Detran.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{username}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{password}}",
+        "type": "string"
+      }
+    ]
+  },
   "item": [
+    {
+      "name": "Public",
+      "item": [
+        {
+          "name": "Info public endpoint",
+          "auth": {
+            "type": "noauth"
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/info",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "info"
+              ]
+            }
+          }
+        }
+      ]
+    },
     {
       "name": "Candidates",
       "item": [
         {
-          "name": "Create candidate",
+          "name": "Create candidate - ADMIN",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
                   "const json = pm.response.json();",
                   "if (json.id) pm.collectionVariables.set('candidateId', json.id);"
                 ],
@@ -47,7 +88,7 @@
           }
         },
         {
-          "name": "List candidates",
+          "name": "List candidates - ALL ROLES",
           "request": {
             "method": "GET",
             "header": [],
@@ -63,7 +104,7 @@
           }
         },
         {
-          "name": "Find candidate by id",
+          "name": "Find candidate by id - ALL ROLES",
           "request": {
             "method": "GET",
             "header": [],
@@ -80,7 +121,7 @@
           }
         },
         {
-          "name": "Update candidate",
+          "name": "Update candidate - ADMIN OR EXAMINER",
           "request": {
             "method": "PUT",
             "header": [
@@ -106,7 +147,7 @@
           }
         },
         {
-          "name": "Delete candidate",
+          "name": "Delete candidate - ADMIN",
           "request": {
             "method": "DELETE",
             "header": [],
@@ -128,12 +169,13 @@
       "name": "Exams",
       "item": [
         {
-          "name": "Create exam",
+          "name": "Create exam - ADMIN",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
                   "const json = pm.response.json();",
                   "if (json.id) pm.collectionVariables.set('examId', json.id);"
                 ],
@@ -165,7 +207,7 @@
           }
         },
         {
-          "name": "List exams",
+          "name": "List exams - ALL ROLES",
           "request": {
             "method": "GET",
             "header": [],
@@ -181,7 +223,7 @@
           }
         },
         {
-          "name": "Find exam by id",
+          "name": "Find exam by id - ALL ROLES",
           "request": {
             "method": "GET",
             "header": [],
@@ -198,7 +240,7 @@
           }
         },
         {
-          "name": "Update exam",
+          "name": "Update exam - ADMIN OR EXAMINER",
           "request": {
             "method": "PUT",
             "header": [
@@ -224,7 +266,7 @@
           }
         },
         {
-          "name": "Delete exam",
+          "name": "Delete exam - ADMIN",
           "request": {
             "method": "DELETE",
             "header": [],
@@ -246,12 +288,13 @@
       "name": "Exam appointments",
       "item": [
         {
-          "name": "Create exam appointment",
+          "name": "Create exam appointment - ADMIN",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
                   "const json = pm.response.json();",
                   "if (json.id) pm.collectionVariables.set('examAppointmentId', json.id);"
                 ],
@@ -283,7 +326,7 @@
           }
         },
         {
-          "name": "List exam appointments",
+          "name": "List exam appointments - ALL ROLES",
           "request": {
             "method": "GET",
             "header": [],
@@ -299,7 +342,7 @@
           }
         },
         {
-          "name": "Find exam appointment by id",
+          "name": "Find exam appointment by id - ALL ROLES",
           "request": {
             "method": "GET",
             "header": [],
@@ -316,7 +359,7 @@
           }
         },
         {
-          "name": "Update exam appointment",
+          "name": "Update exam appointment - ADMIN OR EXAMINER",
           "request": {
             "method": "PUT",
             "header": [
@@ -342,7 +385,7 @@
           }
         },
         {
-          "name": "Delete exam appointment",
+          "name": "Delete exam appointment - ADMIN",
           "request": {
             "method": "DELETE",
             "header": [],
@@ -364,12 +407,13 @@
       "name": "Exam results",
       "item": [
         {
-          "name": "Create exam result",
+          "name": "Create exam result - ADMIN",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
                   "const json = pm.response.json();",
                   "if (json.id) pm.collectionVariables.set('examResultId', json.id);"
                 ],
@@ -401,7 +445,7 @@
           }
         },
         {
-          "name": "List exam results",
+          "name": "List exam results - ALL ROLES",
           "request": {
             "method": "GET",
             "header": [],
@@ -417,7 +461,7 @@
           }
         },
         {
-          "name": "Find exam result by id",
+          "name": "Find exam result by id - ALL ROLES",
           "request": {
             "method": "GET",
             "header": [],
@@ -434,7 +478,7 @@
           }
         },
         {
-          "name": "Update exam result",
+          "name": "Update exam result - ADMIN OR EXAMINER",
           "request": {
             "method": "PUT",
             "header": [
@@ -460,7 +504,7 @@
           }
         },
         {
-          "name": "Delete exam result",
+          "name": "Delete exam result - ADMIN",
           "request": {
             "method": "DELETE",
             "header": [],
@@ -477,12 +521,76 @@
           }
         }
       ]
+    },
+    {
+      "name": "Security checks",
+      "item": [
+        {
+          "name": "403 attendant cannot create candidate",
+          "auth": {
+            "type": "basic",
+            "basic": [
+              {
+                "key": "username",
+                "value": "attendant",
+                "type": "string"
+              },
+              {
+                "key": "password",
+                "value": "attendant123",
+                "type": "string"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 403', () => pm.response.to.have.status(403));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Maria Teste\",\n  \"email\": \"maria.teste@email.com\",\n  \"licenseCategory\": \"CATEGORYA\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/candidates",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "candidates"
+              ]
+            }
+          }
+        }
+      ]
     }
   ],
   "variable": [
     {
       "key": "baseUrl",
       "value": "http://localhost:8080"
+    },
+    {
+      "key": "username",
+      "value": "admin"
+    },
+    {
+      "key": "password",
+      "value": "admin123"
     },
     {
       "key": "candidateId",

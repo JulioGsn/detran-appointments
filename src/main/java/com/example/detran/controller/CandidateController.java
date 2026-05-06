@@ -9,12 +9,16 @@ import com.example.detran.service.CandidateService;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/candidates")
@@ -26,27 +30,28 @@ public class CandidateController {
     }
 
     @GetMapping()
-    public List<CandidateResponse> findAll() {
-        return candidateService.findAll();
+    public ResponseEntity<List<CandidateResponse>> findAll() {
+        return ResponseEntity.ok(candidateService.findAll());
     }
 
     @PostMapping
-    public CandidateResponse create(@RequestBody CandidateRequest candidate) {
-        return candidateService.create(candidate);
+    public ResponseEntity<CandidateResponse> create(@Valid @RequestBody CandidateRequest candidate) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(candidateService.create(candidate));
     }
     
     @PutMapping("/{id}")
-    public CandidateResponse update(@PathVariable Long id, @RequestBody CandidateRequest request) {
-        return candidateService.update(id, request);
+    public ResponseEntity<CandidateResponse> update(@PathVariable Long id, @Valid @RequestBody CandidateRequest request) {
+        return ResponseEntity.ok(candidateService.update(id, request));
     }
 
     @GetMapping("/{id}")
-    public CandidateResponse findById(@PathVariable Long id) {
-        return candidateService.findById(id);
+    public ResponseEntity<CandidateResponse> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(candidateService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         candidateService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

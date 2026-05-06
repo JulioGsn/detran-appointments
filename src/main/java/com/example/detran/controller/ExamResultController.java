@@ -2,6 +2,8 @@ package com.example.detran.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,8 @@ import com.example.detran.dto.result.ExamResultRequest;
 import com.example.detran.dto.result.ExamResultResponse;
 import com.example.detran.service.ExamResultService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/exam-results")
 public class ExamResultController {
@@ -25,27 +29,28 @@ public class ExamResultController {
     }
 
     @GetMapping
-    public List<ExamResultResponse> findAll() {
-        return examResultService.findAll();
+    public ResponseEntity<List<ExamResultResponse>> findAll() {
+        return ResponseEntity.ok(examResultService.findAll());
     }
 
     @PostMapping
-    public ExamResultResponse create(@RequestBody ExamResultRequest request) {
-        return examResultService.create(request);
+    public ResponseEntity<ExamResultResponse> create(@Valid @RequestBody ExamResultRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(examResultService.create(request));
     }
 
     @PutMapping("/{id}")
-    public ExamResultResponse update(@PathVariable Long id, @RequestBody ExamResultRequest request) {
-        return examResultService.update(id, request);
+    public ResponseEntity<ExamResultResponse> update(@PathVariable Long id, @Valid @RequestBody ExamResultRequest request) {
+        return ResponseEntity.ok(examResultService.update(id, request));
     }
 
     @GetMapping("/{id}")
-    public ExamResultResponse findById(@PathVariable Long id) {
-        return examResultService.findById(id);
+    public ResponseEntity<ExamResultResponse> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(examResultService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         examResultService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
